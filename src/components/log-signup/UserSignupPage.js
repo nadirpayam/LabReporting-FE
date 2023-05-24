@@ -1,8 +1,10 @@
 import React, { Component, useTransition } from "react";
-import { signup,changeLanguage } from "../shared/apiCalls";
+import { signup, changeLanguage } from "../shared/apiCalls";
 import Input from "../shared/Input";
 import { withTranslation } from "react-i18next";
-
+import ButtonProgress from "../shared/ButtonProgress";
+import { withApiProgress } from "../shared/apiProgress";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 class UserSignupPage extends Component {
   state = {
@@ -14,68 +16,57 @@ class UserSignupPage extends Component {
     password: null,
     repeat: null,
     pendingApiCall: false,
-    errors: {},
+    error: {},
   };
 
   onChange = (event) => {
     const { t } = this.props;
     const { name, value } = event.target;
-    const errors = { ...this.state.errors };
-    errors[name] = undefined;
+    const error = { ...this.state.error };
+    error[name] = undefined;
     if (name === "password" || name === "repeat") {
       if (name === "password" && value !== this.state.repeat) {
-        errors.repeat = t("Password mismatch");
+        error.repeat = t("Password mismatch");
       } else if (name === "repeat" && value !== this.state.password) {
-        errors.repeat = t("Password mismatch");
+        error.repeat = t("Password mismatch");
       } else {
-        errors.repeat = undefined;
+        error.repeat = undefined;
       }
     }
     this.setState({
       [name]: value,
-      errors,
+      error,
     });
   };
 
   onClickSignup = async (event) => {
     event.preventDefault();
-    const { name, surname, identity, email, username, password } = this.state;
+
+    const { name, surname, username, email, password, identity } = this.state;
 
     const body = {
-      name,
+      name, //key=value isimleri aynı olduğu için sadece bir tanesini yazdım normalde name=name yazılır
       surname,
+      username,
       identity,
       email,
-      username,
       password,
     };
-    this.setState({ pendingApiCall: true });
 
     try {
       const response = await signup(body);
     } catch (error) {
       if (error.response.data.validationErrors) {
-        this.setState({ errors: error.response.data.validationErrors });
+        this.setState({ error: error.response.data.validationErrors });
       }
     }
-
-    this.setState({ pendingApiCall: false });
   };
 
-
-onChangeLanguage = language => {
-  const {i18n} = this.props;
-  i18n.changeLanguage(language);
-  changeLanguage(language)
-
-}
-
-
   render() {
-    const { pendingApiCall, errors } = this.state;
-    const { username, name, surname, email, identity, password, repeat } =
-      errors;
-    const { t } = this.props;
+    const { error } = this.state;
+    const { name, surname, email, identity, password, repeat, username } =
+      error;
+    const { t, pendingApiCall } = this.props;
     return (
       <form>
         <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -144,18 +135,25 @@ onChangeLanguage = language => {
                             onChange={this.onChange}
                           />
 
+                          <div class="form-check d-flex justify-content-center mb-5">
+                            <label class="form-check-label" for="form2Example3">
+                            {t("RegisterYonu")}
+                              <Link
+                                to="/login"
+                                className="dtext-white-50 fw-bold"
+                              >
+                                {t("Login")}
+                              </Link>
+                            </label>
+                          </div>
+
                           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <button
-                              type="button"
-                              className="btn btn-primary btn-lg"
+                            <ButtonProgress
                               onClick={this.onClickSignup}
                               disabled={pendingApiCall || repeat !== undefined}
-                            >
-                              {pendingApiCall && (
-                                <span className="spinner-border spinner-border-sm"></span>
-                              )}
-                              {t("Sign Up")}
-                            </button>
+                              pendingApiCall={pendingApiCall}
+                              text={t("Sign Up")}
+                            />
                           </div>
                         </form>
                       </div>
@@ -168,10 +166,6 @@ onChangeLanguage = language => {
                         />
                       </div>
                     </div>
-                    <div>
-                      <img src="./Images/tr.png" alt="Turkish Flag" onClick={()=> this.onChangeLanguage('tr')} style={{cursor:'pointer'}}></img>
-                      <img src="./Images/uk.png" alt="British Flag"  onClick={()=> this.onChangeLanguage('en')} style={{cursor:'pointer'}}></img>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -183,6 +177,13 @@ onChangeLanguage = language => {
   }
 }
 
-const UserSignupPageWithTranslation = withTranslation()(UserSignupPage);
+const UserSignupPageWithApiProgress = withApiProgress(
+  UserSignupPage,
+  "/api/users"
+);
+
+const UserSignupPageWithTranslation = withTranslation()(
+  UserSignupPageWithApiProgress
+);
 
 export default UserSignupPageWithTranslation;

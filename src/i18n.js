@@ -13,7 +13,10 @@ i18n.use(initReactI18next).init({
              'Your Identity':'Your Identity',
              'Your Email': 'Your Email',
              'Your Password':'Your Password',
-             'Repeat Your Password':'Repeat Your Password'
+             'Repeat Your Password':'Repeat Your Password',
+             'Login':'Login',
+             "LoginYonu":"Don't have an account?",
+             "RegisterYonu":"Do you have an account?",
             }
         },
         tr: {
@@ -26,7 +29,10 @@ i18n.use(initReactI18next).init({
                 'Your Username':'Kullanıcı Adınız',
                 'Your Identity':'TC Kimlik Numaranız',
                 'Your Password':'Şifreniz',
-                'Repeat Your Password':'Şifrenizi Tekrarlayınız'
+                'Repeat Your Password':'Şifrenizi Tekrarlayınız',
+                'Login':'Giriş Yap',
+                "LoginYonu":"Hesabın yok mu?",
+                "RegisterYonu":"Hesabın var mı?"
 
 
             }
