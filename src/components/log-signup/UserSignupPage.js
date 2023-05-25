@@ -5,6 +5,8 @@ import { withTranslation } from "react-i18next";
 import ButtonProgress from "../shared/ButtonProgress";
 import { withApiProgress } from "../shared/apiProgress";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { signupHandler, loginSuccess } from "../../redux/authActions";
 
 class UserSignupPage extends Component {
   state = {
@@ -41,6 +43,8 @@ class UserSignupPage extends Component {
 
   onClickSignup = async (event) => {
     event.preventDefault();
+    const { history, dispatch } = this.props;
+    const { push } = history;
 
     const { name, surname, username, email, password, identity } = this.state;
 
@@ -54,7 +58,8 @@ class UserSignupPage extends Component {
     };
 
     try {
-      const response = await signup(body);
+      await dispatch(signupHandler(body));
+      push("/addreport");
     } catch (error) {
       if (error.response.data.validationErrors) {
         this.setState({ error: error.response.data.validationErrors });
@@ -137,7 +142,7 @@ class UserSignupPage extends Component {
 
                           <div class="form-check d-flex justify-content-center mb-5">
                             <label class="form-check-label" for="form2Example3">
-                            {t("RegisterYonu")}
+                              {t("RegisterYonu")}
                               <Link
                                 to="/login"
                                 className="dtext-white-50 fw-bold"
@@ -177,13 +182,19 @@ class UserSignupPage extends Component {
   }
 }
 
-const UserSignupPageWithApiProgress = withApiProgress(
+const UserSignupPageWithApiProgressForSignupRequest = withApiProgress(
   UserSignupPage,
   "/api/users"
 );
 
-const UserSignupPageWithTranslation = withTranslation()(
-  UserSignupPageWithApiProgress
+const UserSignupPageWithApiProgressForAuthRequest = withApiProgress(
+  UserSignupPageWithApiProgressForSignupRequest,
+  "/api/auth"
 );
 
-export default UserSignupPageWithTranslation;
+
+const UserSignupPageWithTranslation = withTranslation()(
+  UserSignupPageWithApiProgressForAuthRequest
+);
+
+export default connect()(UserSignupPageWithTranslation);

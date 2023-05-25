@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import ProfilCard from "../user/ProfilCard";
 
 class AddReport extends Component {
+    
     render() {
+
         return (
             <div>
-                Rapor Ekleme Sayfası
+                Add Report
             </div>
         );
     }

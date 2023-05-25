@@ -17,6 +17,7 @@ i18n.use(initReactI18next).init({
              'Login':'Login',
              "LoginYonu":"Don't have an account?",
              "RegisterYonu":"Do you have an account?",
+             "Logout":"Logout"
             }
         },
         tr: {
@@ -32,7 +33,8 @@ i18n.use(initReactI18next).init({
                 'Repeat Your Password':'Şifrenizi Tekrarlayınız',
                 'Login':'Giriş Yap',
                 "LoginYonu":"Hesabın yok mu?",
-                "RegisterYonu":"Hesabın var mı?"
+                "RegisterYonu":"Hesabın var mı?",
+                "Logout":"Çıkış Yap"
 
 
             }

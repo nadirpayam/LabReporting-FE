@@ -1,14 +1,16 @@
 import React, { Component, useTransition } from "react";
-import { signup, login } from "../shared/apiCalls";
 import Input from "../shared/Input";
 import { withTranslation } from "react-i18next";
 import ButtonProgress from "../shared/ButtonProgress";
 import { withApiProgress } from "../shared/apiProgress";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
+import { loginHandler, loginSuccess } from "../../redux/authActions";
+
+//import {Authentication} from "../shared/AuthenticationContext";
 
 class UserLoginPage extends Component {
-
+  //static contextType = Authentication;
   state = {
     username: "",
     password: "",
@@ -31,13 +33,14 @@ class UserLoginPage extends Component {
       password,
     };
 
-    const {push} = this.props.history;
+    const { history, dispatch } = this.props;
+    const { push } = history;
     this.setState({
       error: null,
     });
     try {
-      await login(creds);
-      push("/addreport")
+      await dispatch(loginHandler(creds));
+      push("/user");
     } catch (apiError) {
       this.setState({
         error: apiError.response.data.message,
@@ -87,7 +90,7 @@ class UserLoginPage extends Component {
                           )}
                           <div class="form-check d-flex justify-content-center mb-5">
                             <label class="form-check-label" for="form2Example3">
-                            {t("LoginYonu")}
+                              {t("LoginYonu")}
                               <Link
                                 to="/register"
                                 className="dtext-white-50 fw-bold"
@@ -128,4 +131,6 @@ class UserLoginPage extends Component {
 
 const UserLoginPageWithTranslation = withTranslation()(UserLoginPage);
 
-export default withApiProgress(UserLoginPageWithTranslation, "/api/auth");
+export default connect()(
+  withApiProgress(UserLoginPageWithTranslation, "/api/auth")
+);
