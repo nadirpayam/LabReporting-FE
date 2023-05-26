@@ -1,5 +1,5 @@
 import * as ACTIONS from "./Constants";
-import { login, signup } from "../components/shared/apiCalls";
+import { login, signup ,setAuthorizationHeader} from "../components/shared/apiCalls";
 
 export const logoutSuccess = () => {
   return {

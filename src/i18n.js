@@ -17,7 +17,11 @@ i18n.use(initReactI18next).init({
              'Login':'Login',
              "LoginYonu":"Don't have an account?",
              "RegisterYonu":"Do you have an account?",
-             "Logout":"Logout"
+             "Logout":"Logout",
+             'Patients':'Patients',
+             next:'next >',
+             previous:'< previous',
+             'Load Failure':'Load Failure'
             }
         },
         tr: {
@@ -34,7 +38,11 @@ i18n.use(initReactI18next).init({
                 'Login':'Giriş Yap',
                 "LoginYonu":"Hesabın yok mu?",
                 "RegisterYonu":"Hesabın var mı?",
-                "Logout":"Çıkış Yap"
+                "Logout":"Çıkış Yap",
+                'Patients':'Hastalar',
+                 next: 'sonraki >',
+                 previous: '< önceki',
+                 'Load Failure':'Liste Alınamadı'
 
 
             }

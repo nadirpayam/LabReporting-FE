@@ -20,3 +20,17 @@ export const login = (creds) => {
     }
   );
 };
+
+export const getAllUsers = (page=0,size=3) => {
+  return axios.get(`/api/users?page=${page}&size=${size}`);
+}
+
+export const setAuthorizationHeader = ({username,password,isLoggedIn}) => {
+  if(isLoggedIn) {
+    const authorizationHeaderValue = `Basic ${btoa(username + `:` + password)}`;
+    axios.defaults.headers["Authorization"] = authorizationHeaderValue;
+  } else {
+    delete axios.defaults.headers['Authorization'];
+  }
+ 
+}

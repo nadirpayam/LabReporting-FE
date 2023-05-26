@@ -10,6 +10,7 @@ import LanugageSelector from './components/shared/LanugageSelector';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import UserPage from './components/user/UserPage';
 import {useSelector} from "react-redux";
+import Users from './components/laborant/Users';
 
 const App = () => {
 
@@ -23,7 +24,7 @@ const App = () => {
       <TopBar/>
       <LanugageSelector/>
     <Switch>
-      <Route exact path="/" component={AddReport}/>
+      <Route exact path="/" component={Users}/>
     {!isLoggedIn &&  (<Route path="/login" component={UserLoginPage}/> )}
       <Route path="/register" component={UserSignupPage}/>
       <Route path="/addreport" component={AddReport }/>
