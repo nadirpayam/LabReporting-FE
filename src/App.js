@@ -9,14 +9,14 @@ import TopBar from './components/topbar/TopBar';
 import LanugageSelector from './components/shared/LanugageSelector';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import UserPage from './components/user/UserPage';
-import {connect} from "react-redux";
-//import {Authentication} from "../src/components/shared/AuthenticationContext";
+import {useSelector} from "react-redux";
 
-class App extends React.Component {
-//static contextType=Authentication;
+const App = () => {
+
+  const {isLoggedIn} = useSelector((store) => ({
+    isLoggedIn:store.isLoggedIn
+  }))
  
-  render() {
-    const {isLoggedIn}=this.props;
 
     return (
       <Routes>
@@ -32,14 +32,9 @@ class App extends React.Component {
     </Switch>
   </Routes>
     );
-  }
   
 }
 
-const mapStateToProps = (store) => {
-  return {
-    isLoggedIn: store.isLoggedIn
-    };
-};
 
-export default connect(mapStateToProps)(App);
+
+export default App;
