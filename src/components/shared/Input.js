@@ -1,7 +1,7 @@
 import React from "react";
 
 function Input(props) {
-    const {iname,type,error,holder,onChange} = props
+    const {iname,type,error,holder,onChange,defaultValue} = props
     return (
       <div className="d-flex flex-row align-items-center mb-4">
         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -13,6 +13,7 @@ function Input(props) {
             className={error ? "form-control is-invalid" : "form-control"}
             placeholder={holder}
             onChange={onChange}
+            defaultValue={defaultValue}
           />
           <div className="invalid-feedback">{error}</div>
         </div>
