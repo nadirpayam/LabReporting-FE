@@ -21,7 +21,8 @@ i18n.use(initReactI18next).init({
              'Patients':'Patients',
              next:'next >',
              previous:'< previous',
-             'Load Failure':'Load Failure'
+             'Load Failure':'Load Failure',
+             'User not found!':'User not found!'
             }
         },
         tr: {
@@ -42,7 +43,8 @@ i18n.use(initReactI18next).init({
                 'Patients':'Hastalar',
                  next: 'sonraki >',
                  previous: '< önceki',
-                 'Load Failure':'Liste Alınamadı'
+                 'Load Failure':'Liste Alınamadı',
+                 'User not found!':'Kullanıcı Bulunamadı!'
 
 
             }
