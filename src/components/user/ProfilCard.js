@@ -20,6 +20,7 @@ const ProfileCard = (props) => {
   const [user, setUser] = useState({});
   const { username, name, image, email } = user;
   const [editable,setEditable] = useState(false);
+  const [newImage,setNewImage] = useState();
 
   useEffect(() => {
     setUser(props.user);
@@ -32,20 +33,38 @@ const ProfileCard = (props) => {
   useEffect(() => {
     if (!inEditMode) {
       setUpdatedEmail(undefined);
+      setNewImage(undefined);
     } else {
       setUpdatedEmail(email);
     }
   }, [inEditMode, email]);
 
   const onClickSave = async () => {
+    let image;
+    if(newImage) {
+      image=newImage.split(',')[1];
+    }
     const body = {
       email: updatedEmail,
+      image
     };
     try {
       const response = await updateUser(username, body);
       setInEditMode(false);
       setUser(response.data);
     } catch (error) {}
+  };
+
+  const onChangeFile = event => {
+    if(event.target.files.length <1){
+      return;
+    }
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      setNewImage(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
   };
 
   const pendingApiCall = useApiProgress("put", "/api/users/" + username);
@@ -61,6 +80,7 @@ const ProfileCard = (props) => {
           className="rounded-circle shadow"
           alt={`${username} profile`}
           image={image}
+          tempimage={newImage}
         />
       </div>
       <div className="card-body">
@@ -89,6 +109,7 @@ const ProfileCard = (props) => {
                 setUpdatedEmail(event.target.value);
               }}
             />
+            <input type="file" onChange={onChangeFile}/>
             <div>
               <ButtonProgress
                 className="btn btn-primary d-inline-flex"
