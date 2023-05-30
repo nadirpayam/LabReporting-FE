@@ -26,7 +26,8 @@ i18n.use(initReactI18next).init({
              Edit:'Edit',
              Save:'Save',
              Cancel:'Cancel',
-             EmailUp:'Update Your Email'
+             EmailUp:'Update Your Email',
+             "My Profile":"My Profile"
             }
         },
         tr: {
@@ -52,7 +53,8 @@ i18n.use(initReactI18next).init({
                  Edit:'Düzenle',
                  Save:'Kaydet',
                  Cancel:'İptal',
-                 EmailUp:'Emailinizi Güncellein'
+                 EmailUp:'Emailinizi Güncellein',
+                 "My Profile":"Profilim"
 
 
             }

@@ -34,3 +34,12 @@ export const signupHandler = (user) => {
    return response;
   }
 }
+
+export const updateSuccess = ({image,username}) => {
+  return {
+    type: ACTIONS.UPDATE_SUCCESS,
+    payload: {
+     image,username
+    }
+  }
+}

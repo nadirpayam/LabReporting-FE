@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch} from "react-redux";
 import ProfileImageWithDefault from "./ProfileImageWithDefault";
 import { useTranslation } from "react-i18next";
 import Input from "../shared/Input";
 import { updateUser } from "../shared/apiCalls";
 import { useApiProgress } from "../shared/apiProgress";
 import ButtonProgress from "../shared/ButtonProgress";
+import {updateSuccess} from "../../redux/authActions"
 
 const ProfileCard = (props) => {
   const [updatedEmail, setUpdatedEmail] = useState();
@@ -21,7 +22,9 @@ const ProfileCard = (props) => {
   const { username, name, image, email } = user;
   const [editable,setEditable] = useState(false);
   const [newImage,setNewImage] = useState();
-
+  const [validationErrors, setValidationErrors] = useState({});
+  const dispatch = useDispatch();
+ 
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
@@ -29,6 +32,24 @@ const ProfileCard = (props) => {
   useEffect(()=>{
     setEditable(pathUsername === loggedInUsername)
   },[pathUsername,loggedInUsername])
+
+  useEffect(()=>{
+    setValidationErrors((previousValidationErrors) => {
+      return {
+        ... previousValidationErrors,
+        email:undefined
+      }
+    })
+  },[updatedEmail])
+
+  useEffect(()=>{
+    setValidationErrors((previousValidationErrors) => {
+      return {
+        ... previousValidationErrors,
+        image:undefined
+      }
+    })
+  },[newImage])
 
   useEffect(() => {
     if (!inEditMode) {
@@ -52,7 +73,10 @@ const ProfileCard = (props) => {
       const response = await updateUser(username, body);
       setInEditMode(false);
       setUser(response.data);
-    } catch (error) {}
+      dispatch(updateSuccess(response.data))
+    } catch (error) {
+      setValidationErrors(error.response.data.validationErrors);
+    }
   };
 
   const onChangeFile = event => {
@@ -69,6 +93,7 @@ const ProfileCard = (props) => {
 
   const pendingApiCall = useApiProgress("put", "/api/users/" + username);
 
+  const {email:emailError,image:imageError} = validationErrors;
   
 
   return (
@@ -108,8 +133,9 @@ const ProfileCard = (props) => {
               onChange={(event) => {
                 setUpdatedEmail(event.target.value);
               }}
+              error={emailError}
             />
-            <input type="file" onChange={onChangeFile}/>
+            <Input type='file' onChange={onChangeFile} error={imageError}/>
             <div>
               <ButtonProgress
                 className="btn btn-primary d-inline-flex"

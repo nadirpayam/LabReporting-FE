@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState,useEffect, useRef } from "react";
 import logo from "../assets/report.ico";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import LanugageSelector from "../shared/LanugageSelector";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../../redux/authActions";
+import ProfileImageWithDefault from "../user/ProfileImageWithDefault";
 
 const TopBar = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [menuVisible,setMenuVisible] = useState(false)
 
-  const { username, isLoggedIn } = useSelector((store) => ({
+  const menuArea = useRef(null);
+
+  const { username, isLoggedIn, image } = useSelector((store) => ({
     isLoggedIn: store.isLoggedIn,
     username: store.username,
+    image: store.image,
   }));
+
+  useEffect(() => {
+    document.addEventListener('click',menuClickTracker);
+    return () => {
+      document.removeEventListener('click',menuClickTracker);
+    }
+  },[isLoggedIn]);
+
+  const menuClickTracker = event => {
+    if(menuArea.current===null || !menuArea.current.contains(event.target)){
+      setMenuVisible(false);
+    }
+  };
+
 
   const onLogoutSuccess = () => {
     dispatch(logoutSuccess());
@@ -36,19 +55,37 @@ const TopBar = (props) => {
     </ul>
   );
   if (isLoggedIn) {
+    let dropDownClass = "dropdown-menu shadow p-0";
+    if(menuVisible) {
+      dropDownClass += " show";
+    }
+   
     links = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-link">
-          <Link className="nav-link" to={`/user/${username}`}>
-            {username}
-          </Link>
-        </li>
-        <li
-          className="nav-link"
-          onClick={onLogoutSuccess}
-          style={{ cursor: "pointer" }}
-        >
-          {t("Logout")}
+      <ul className="navbar-nav ml-auto" ref={menuArea}>
+        <li className="nav-item dropdown">
+          <div className="d-flex" style={{ cursor: "pointer" }} onClick={() => setMenuVisible(true)}>
+            <ProfileImageWithDefault
+              image={image}
+              width="32"
+              height="32"
+              className="rounded-circle m-auto"
+            />
+            <span className="nav-link dropdown-toggle"> {username}</span>
+          </div>
+          <div className={dropDownClass}>
+            <Link className="dropdown-item d-flex p-2" to={`/user/${username}`} onClick={()=>setMenuVisible(false)}>
+              <i className="material-icons text-info mr-2">person</i>
+              {t("My Profile")}
+            </Link>
+            <span
+              className="dropdown-item d-flex p-2"
+              onClick={onLogoutSuccess}
+              style={{ cursor: "pointer" }}
+            >
+             <i className="material-icons text-danger mr-4">power_settings_new</i>
+              {t("Logout")}
+            </span>
+          </div>
         </li>
       </ul>
     );
