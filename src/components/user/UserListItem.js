@@ -10,12 +10,11 @@ const UserListItem = (props) => {
   const history = useHistory();
   const { push } = history;
 
-  const { username, name, email, identity, surname ,userId} = user;
+  const { username, name, email, identity, surname, userId ,image} = user;
 
   const onClickButton = () => {
     push("/addreport");
-    localStorage.setItem("currentPatient",userId);
-
+    localStorage.setItem("currentPatient", userId);
   };
 
   return (
@@ -36,6 +35,7 @@ const UserListItem = (props) => {
               className="rounded-circle"
               width="32"
               height="32"
+              image={image}
               alt={`${username} profile `}
             />
           </td>
@@ -43,7 +43,7 @@ const UserListItem = (props) => {
           <td>{surname}</td>
           <td>{identity}</td>
           <td>{email}</td>
-          <button className="btn btn-success" onClick={onClickButton}>
+          <button className="btn btn-success text-dark" onClick={onClickButton}>
             {t("Add report")}
           </button>
         </tr>

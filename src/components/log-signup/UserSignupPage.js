@@ -51,7 +51,7 @@ const UserSignupPage = (props) => {
 
     try {
       await dispatch(signupHandler(body));
-      push("/addreport");
+      push("/myreports");
     } catch (error) {
       if (error.response.data.validationErrors) {
         setError( error.response.data.validationErrors);

@@ -39,12 +39,12 @@ const UserLoginPage = (props) => {
         localStorage.setItem("name", result.data.name);
         localStorage.setItem("username", result.data.username);
         localStorage.setItem("role", result.data.role);
-        localStorage.setItem("laborant", result.data.userId);
+        localStorage.setItem("currentUser", result.data.userId);
       }
 
       localStorage.getItem("role") === "LAB"
-        ? push("/addreport")
-        : push("/register");
+        ? push("/reports")
+        : push("/myreports");
     } catch (apiError) {
       setError(apiError.response.data.message);
     }
@@ -54,10 +54,10 @@ const UserLoginPage = (props) => {
   const pendingApiCall = useApiProgress("post", "/api/auth");
   const buttonEnabled = username && password;
   return (
-    <form>
+    <form onSubmit={event => event.preventDefault()}>
       <section className="vh-100" style={{ backgroundColor: "#eee" }}>
-        <div className="container h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="container">
+          <div className="row d-flex justify-content-center align-items-center" style={{marginTop:"75px"}}>
             <div className="col-lg-12 col-xl-11">
               <div className="card text-black" style={{ borderRadius: "25px" }}>
                 <div className="card-body p-md-5">

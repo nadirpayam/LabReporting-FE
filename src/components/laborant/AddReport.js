@@ -22,13 +22,13 @@ const AddReport = (props) => {
     const body = {
       details,
       diagnosis,
-      labId:localStorage.getItem("laborant"),
+      labId:localStorage.getItem("currentUser"),
       userId: localStorage.getItem("currentPatient")
     };
 
     try {
       await (postReport(body))
-      push("/register");
+      push("/reports");
     } catch (error) {
       if (error.response.data.validationErrors) {
         setError( error.response.data.validationErrors);

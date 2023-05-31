@@ -49,5 +49,13 @@ export const postReport = body => {
 }
 
 export const getReports = () => {
-  return axios.get('/api/reports');
+  return axios.get('/api/reports?userId='+localStorage.getItem("currentUser"));
+}
+
+export const updateReports = (reportId,body) => {
+  return axios.put(`/api/reports/${reportId}`,body)
+}
+
+export const deleteReports = (reportId) => {
+  return axios.delete(`/api/reports/${reportId}`)
 }

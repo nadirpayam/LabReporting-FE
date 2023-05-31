@@ -112,8 +112,6 @@ const ProfileCard = (props) => {
         {!inEditMode && (
           <>
             <h3>
-              {name} {"        "}
-              {username} {"     "}
               {email}
             </h3>
            {editable && <button

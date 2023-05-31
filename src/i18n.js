@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+
 i18n.use(initReactI18next).init({
     resources: {
         en: {
@@ -32,7 +33,25 @@ i18n.use(initReactI18next).init({
              Soyad:"SURNAME",
              'TC':'IDENTİTY NO',
              'EMAİL':'EMAIL',
-             'Add report':'Add Report'
+             'Add report':'Add Report',
+             "My Reports":"My Reports",
+             "PName":"Patient Name",
+             "PSurName":"Patient SurName",
+             "DIAGNOSIS":"Diagnosis",
+             "DIAGNOSIS DETAILS":"Diagnosis Details",
+             "REPORT DATE":"Report Date",
+             "update":"Edit",
+             "delete":"Delete",
+             "Patients":"Patients",
+             "All Reports":"All Reports",
+             "GoRapor":"Go To Rapor",
+             "DNo":"REPORT NO",
+             "EmailH":"Patient's Email",
+                              "labad":"Laborant Name",
+                              "labsad":"Laborant Surname",
+                              "labno":"Laborant Hospital No",
+                              "labemail":"Laborant Mail"
+
             }
         },
         tr: {
@@ -64,7 +83,24 @@ i18n.use(initReactI18next).init({
                  Soyad:"SOYAD",
                  'TC':'TC',
                  'EMAİL':'EMAIL',
-                 'Add report':'Rapor Oluştur'
+                 'Add report':'Rapor Oluştur',
+                 "My Reports":"Raporlarım",
+                 "PName":"Hasta Adı",
+                 "PSurName":"Hasta Soyadı",
+                 "DIAGNOSIS":"Tanı",
+                 "DIAGNOSIS DETAILS":"Tanı Detayı",
+                 "REPORT DATE":"Rapor Tarihi",
+                 "update":"Düzenle",
+                 "delete":"Sil",
+                 "Patients":"Hastalar",
+                 "All Reports":"Tüm Raporlar",
+                 "GoRapor":"Rapora Git",
+                 "DNo":"RAPOR NO",
+                 "EmailH":"Hasta Mail",
+                 "labad":"Laborant Adı",
+                 "labsad":"Laborant Soyadı",
+                 "labno":"Laborant Hastane No",
+                 "labemail":"Laborant Mail"
             }
         }
     },

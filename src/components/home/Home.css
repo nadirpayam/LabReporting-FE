@@ -1,0 +1,18 @@
+.sayfa-container {
+    background-color: #8fc4b7; /* Arka plan rengi */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .metin-container {
+    text-align: center;
+  }
+  
+  .ankalab-baslik {
+    color: #4835d4;
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
