@@ -6,14 +6,14 @@ import { useApiProgress } from "../shared/apiProgress";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginHandler, loginSuccess } from "../../redux/authActions";
+import SecureLS from "secure-ls";
 
 const UserLoginPage = (props) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
-  
+  const ls = new SecureLS();
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     setError(undefined);
@@ -31,15 +31,27 @@ const UserLoginPage = (props) => {
 
     setError(undefined);
     try {
-      await dispatch(loginHandler(creds));
-      push("/user");
+      const result = await dispatch(loginHandler(creds));
+      console.log(result.data);
+      {
+        localStorage.setItem("email", result.data.email);
+        localStorage.setItem("hospitalNO", result.data.hospitalNO);
+        localStorage.setItem("name", result.data.name);
+        localStorage.setItem("username", result.data.username);
+        localStorage.setItem("role", result.data.role);
+        localStorage.setItem("laborant", result.data.userId);
+      }
+
+      localStorage.getItem("role") === "LAB"
+        ? push("/addreport")
+        : push("/register");
     } catch (apiError) {
       setError(apiError.response.data.message);
     }
   };
 
-  const {t} = useTranslation();
-  const  pendingApiCall = useApiProgress("post","/api/auth");
+  const { t } = useTranslation();
+  const pendingApiCall = useApiProgress("post", "/api/auth");
   const buttonEnabled = username && password;
   return (
     <form>
@@ -115,6 +127,5 @@ const UserLoginPage = (props) => {
     </form>
   );
 };
-
 
 export default UserLoginPage;

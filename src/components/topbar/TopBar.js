@@ -73,10 +73,19 @@ const TopBar = (props) => {
             <span className="nav-link dropdown-toggle"> {username}</span>
           </div>
           <div className={dropDownClass}>
-            <Link className="dropdown-item d-flex p-2" to={`/user/${username}`} onClick={()=>setMenuVisible(false)}>
+           <Link className="dropdown-item d-flex p-2" to={`/user/${username}`} onClick={()=>setMenuVisible(false)}>
               <i className="material-icons text-info mr-2">person</i>
               {t("My Profile")}
-            </Link>
+            </Link> 
+            {localStorage.getItem("role")==="LAB" && <Link className="dropdown-item d-flex p-2" to={`/addreport`} onClick={()=>setMenuVisible(false)}>
+              <i className="material-icons text-info mr-2">person</i>
+              {t("Add Report")}
+            </Link> } 
+            
+            {localStorage.getItem("role")==="LAB" && <Link className="dropdown-item d-flex p-2" to={`/users`} onClick={()=>setMenuVisible(false)}>
+              <i className="material-icons text-info mr-2">person</i>
+              {t("Patients")}
+            </Link> }
             <span
               className="dropdown-item d-flex p-2"
               onClick={onLogoutSuccess}

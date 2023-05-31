@@ -11,6 +11,8 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import UserPage from './components/user/UserPage';
 import {useSelector} from "react-redux";
 import Users from './components/laborant/Users';
+import UserListItem from './components/user/UserListItem';
+import UserList from './components/user/UserList';
 
 const App = () => {
 
@@ -24,10 +26,11 @@ const App = () => {
       <TopBar/>
       <LanugageSelector/>
     <Switch>
-      <Route exact path="/" component={Users}/>
+      <Route exact path="/" component={UserLoginPage}/>
     {!isLoggedIn &&  (<Route path="/login" component={UserLoginPage}/> )}
       <Route path="/register" component={UserSignupPage}/>
-      <Route path="/addreport" component={AddReport }/>
+      <Route path="/users" component={UserList}/>
+      <Route path="/addreport" component={AddReport}/>
       <Route path="/user/:username" component={UserPage}/>
       <Redirect to="/addreport"/>
     </Switch>

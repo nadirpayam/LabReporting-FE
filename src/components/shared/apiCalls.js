@@ -44,5 +44,10 @@ export const updateUser = (username,body) => {
   return axios.put(`/api/users/${username}`,body);
 } 
 
+export const postReport = body => {
+  return axios.post("/api/reports",body);
+}
 
-
+export const getReports = () => {
+  return axios.get('/api/reports');
+}

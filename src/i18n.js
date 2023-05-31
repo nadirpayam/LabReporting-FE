@@ -27,7 +27,12 @@ i18n.use(initReactI18next).init({
              Save:'Save',
              Cancel:'Cancel',
              EmailUp:'Update Your Email',
-             "My Profile":"My Profile"
+             "My Profile":"My Profile",
+             'Name':'NAME',
+             Soyad:"SURNAME",
+             'TC':'IDENTİTY NO',
+             'EMAİL':'EMAIL',
+             'Add report':'Add Report'
             }
         },
         tr: {
@@ -54,9 +59,12 @@ i18n.use(initReactI18next).init({
                  Save:'Kaydet',
                  Cancel:'İptal',
                  EmailUp:'Emailinizi Güncellein',
-                 "My Profile":"Profilim"
-
-
+                 "My Profile":"Profilim",
+                 'Name':'AD',
+                 Soyad:"SOYAD",
+                 'TC':'TC',
+                 'EMAİL':'EMAIL',
+                 'Add report':'Rapor Oluştur'
             }
         }
     },
